@@ -1,23 +1,20 @@
 package WeatherAPI;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
-public class Controller {
+public class Controller implements Initializable {
 
     @FXML
     private TextField cityTextField;
@@ -71,6 +68,28 @@ public class Controller {
     @FXML
     private ImageView iconImageView5;
 
+    @FXML
+    private Label infoLabel;
+    @FXML
+    private Label infoLabel1;
+    @FXML
+    private Label infoLabel2;
+    @FXML
+    private Label infoLabel3;
+    @FXML
+    private Label infoLabel4;
+    @FXML
+    private Label infoLabel5;
+
+    public void initialize(URL location, ResourceBundle resources) {
+        String info = "Description: \nTemperature: \nPressure: \nHumidity: \nWind:";
+        infoLabel.setText(info);
+        infoLabel1.setText(info);
+        infoLabel2.setText(info);
+        infoLabel3.setText(info);
+        infoLabel4.setText(info);
+        infoLabel5.setText(info);
+    }
 
     public void getWeatherButtonClick(ActionEvent event) {
 
@@ -82,6 +101,7 @@ public class Controller {
 
             } catch (HttpClientErrorException e) {
                 ApiAlert apiAlert = new ApiAlert(e);
+                apiAlert.show();
             }
         }
     }
@@ -106,6 +126,7 @@ public class Controller {
 
             } catch (HttpClientErrorException e) {
                 ApiAlert apiAlert = new ApiAlert(e);
+                apiAlert.show();
             }
         }
     }
@@ -124,6 +145,9 @@ public class Controller {
             countryLabel.setText("Fill in country field");
             return false;
         }
+
+        cityLabel.setText("");
+        countryLabel.setText("");
         return true;
     }
 }

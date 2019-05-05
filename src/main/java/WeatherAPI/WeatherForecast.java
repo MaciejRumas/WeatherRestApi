@@ -20,12 +20,12 @@ public class WeatherForecast{
     public static Weather getCurrentWeather(String city, String country) throws HttpClientErrorException {
         RestTemplate restTemplate = new RestTemplate();
         String resourceUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city.toLowerCase() + "," + country.toLowerCase() +"&units=metric&APPID=42c57f20541b4050308f26f556c468c1";
-        System.out.println(resourceUrl);
+        //System.out.println(resourceUrl);
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(resourceUrl , String.class);
 
             if(responseEntity.getStatusCode() == HttpStatus.OK){
                 String response = responseEntity.getBody();
-
+                //System.out.println(response);
                 JsonObject jsonObject = new Gson().fromJson(response, JsonObject.class);
                 JsonArray weatherArray = (JsonArray) jsonObject.get("weather");
                 JsonObject weatherEntity = (JsonObject) weatherArray.get(0);
@@ -53,13 +53,13 @@ public class WeatherForecast{
     public static List<Weather> get5DayWeatherForecast(String city, String country) throws HttpClientErrorException{
         RestTemplate restTemplate = new RestTemplate();
         String resourceUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city.toLowerCase() + "," + country.toLowerCase() +"&units=metric&APPID=42c57f20541b4050308f26f556c468c1";
-        System.out.println(resourceUrl);
+        //System.out.println(resourceUrl);
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(resourceUrl , String.class);
 
             if(responseEntity.getStatusCode() == HttpStatus.OK){
                 String response = responseEntity.getBody();
 
-                System.out.println(response);
+                //System.out.println(response);
 
                 List<Weather> weatherList = new ArrayList<Weather>();
 

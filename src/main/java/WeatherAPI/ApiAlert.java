@@ -11,7 +11,6 @@ public class ApiAlert extends Alert {
         setContentText(e.getStatusText());
         setHeaderText(e.getLocalizedMessage());
         setTitle("Error");
-        show();
     }
 
 }
