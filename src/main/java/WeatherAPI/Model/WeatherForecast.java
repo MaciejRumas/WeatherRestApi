@@ -1,9 +1,8 @@
-package WeatherAPI;
+package WeatherAPI.Model;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.sun.org.apache.xml.internal.serialize.LineSeparator;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,25 +26,7 @@ public class WeatherForecast{
                 String response = responseEntity.getBody();
                 //System.out.println(response);
                 JsonObject jsonObject = new Gson().fromJson(response, JsonObject.class);
-                JsonArray weatherArray = (JsonArray) jsonObject.get("weather");
-                JsonObject weatherEntity = (JsonObject) weatherArray.get(0);
-
-                Weather weather = new Weather();
-
-
-                String iconUrl = "http://openweathermap.org/img/w/" + weatherEntity.get("icon").getAsString() + ".png";
-
-                JsonObject main = (JsonObject) jsonObject.get("main");
-                JsonObject wind = (JsonObject) jsonObject.get("wind");
-
-                weather.setDescription(weatherEntity.get("description").getAsString());
-                weather.setHumidity(main.get("humidity").getAsString());
-                weather.setPressure(main.get("pressure").getAsString());
-                weather.setTemperature(main.get("temp").getAsString());
-                weather.setWindDeg(wind.get("deg").getAsString());
-                weather.setWindSpeed(wind.get("speed").getAsString());
-                weather.setIcon(new Image(iconUrl));
-                return weather;
+                return assignWeather(jsonObject);
             }
             return null;
     }
@@ -66,26 +47,33 @@ public class WeatherForecast{
                 JsonObject jsonObject = new Gson().fromJson(response, JsonObject.class);
                 JsonArray list = (JsonArray)jsonObject.get("list");
 
-                for(int i=0;i<5;i++){
+                for(int i=0;i<40;i+=8){
                     JsonObject arrayEntity = (JsonObject) list.get(i);
-                    JsonObject main = (JsonObject) arrayEntity.get("main");
-                    JsonObject wind = (JsonObject) arrayEntity.get("wind");
-                    JsonArray weatherArray = (JsonArray) arrayEntity.get("weather");
-                    JsonObject weatherEntity = (JsonObject) weatherArray.get(0);
-                    String iconUrl = "http://openweathermap.org/img/w/" + weatherEntity.get("icon").getAsString() + ".png";
-                    Weather weather = new Weather();
-                    weather.setDescription(weatherEntity.get("description").getAsString());
-                    weather.setHumidity(main.get("humidity").getAsString());
-                    weather.setPressure(main.get("pressure").getAsString());
-                    weather.setTemperature(main.get("temp").getAsString());
-                    weather.setWindDeg(wind.get("deg").getAsString());
-                    weather.setWindSpeed(wind.get("speed").getAsString());
-                    weather.setIcon(new Image(iconUrl));
-                    weatherList.add(weather);
+                    weatherList.add(assignWeather(arrayEntity));
                 }
                 return weatherList;
             }
     return null;
+    }
+
+    private static Weather assignWeather(JsonObject jsonObject){
+        JsonArray weatherArray = (JsonArray) jsonObject.get("weather");
+        JsonObject weatherEntity = (JsonObject) weatherArray.get(0);
+        JsonObject main = (JsonObject) jsonObject.get("main");
+        JsonObject wind = (JsonObject) jsonObject.get("wind");
+
+        String iconUrl = "http://openweathermap.org/img/w/" + weatherEntity.get("icon").getAsString() + ".png";
+
+        Weather weather = new Weather();
+
+        weather.setDescription(weatherEntity.get("description").getAsString());
+        weather.setHumidity(main.get("humidity").getAsString());
+        weather.setPressure(main.get("pressure").getAsString());
+        weather.setTemperature(main.get("temp").getAsString());
+        weather.setWindDeg(wind.get("deg").getAsString());
+        weather.setWindSpeed(wind.get("speed").getAsString());
+        weather.setIcon(new Image(iconUrl));
+        return weather;
     }
 
 }

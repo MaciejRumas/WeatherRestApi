@@ -1,4 +1,4 @@
-package WeatherAPI;
+package WeatherAPI.Controller;
 
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -6,6 +6,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import WeatherAPI.Model.ApiAlert;
+import WeatherAPI.Model.Weather;
+import WeatherAPI.Model.WeatherForecast;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

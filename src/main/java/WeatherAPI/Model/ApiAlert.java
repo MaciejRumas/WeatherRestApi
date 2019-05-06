@@ -1,4 +1,4 @@
-package WeatherAPI;
+package WeatherAPI.Model;
 
 import org.springframework.web.client.HttpClientErrorException;
 

@@ -13,7 +13,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        URL url = new File("src/main/java/WeatherAPI/mainStage.fxml").toURL();
+        URL url = new File("src/main/java/WeatherAPI/View/mainStage.fxml").toURL();
         Parent root = FXMLLoader.load(url);
         //Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("WeatherAPI.fxml"));
         primaryStage.setTitle("Hello World");
